@@ -1,3 +1,3 @@
-# Step 1:
+# Step 1
 # Run the Docker Hub container with kubernetes
-kubectl apply -f ./blue-controller.json
+kubectl apply -f ./blue-green-service.json
