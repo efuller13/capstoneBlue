@@ -9,12 +9,51 @@ pipeline {
         }
         stage('Build blue image') {
             steps {
-                sh 'sudo -S ./run_docker.sh'
+               sh '''
+                            #!/usr/bin/env bash
+
+                            ## Complete the following steps to get Docker running locally
+
+                            # Step 1:
+                            # Build image and add a descriptive tag
+                            docker build --tag=blueimage .
+
+                            # Step 2: 
+                            # List docker images
+                            docker image ls
+
+                            # Step 3: 
+                            # Run flask app
+                            docker run -p 8000:80 blueimage
+                            
+                            # Step 4:
+                            # Exit docker
+                            exit
+                 '''
             }
         }
         stage('Push blue image') {
             steps {
-                sh 'sudo -S ./upload_docker.sh'
+               sh '''
+                            #!/usr/bin/env bash
+                            # This file tags and uploads an image to Docker Hub
+
+                            # Assumes that an image is built via `run_docker.sh`
+
+                            # Step 1:
+                            # Create dockerpath
+                            # dockerpath=<your docker ID/path>
+                            dockerpath=blueimage
+
+                            # Step 2:  
+                            # Authenticate & tag
+                            echo "Docker ID and Image: $dockerpath"
+                            docker login --username efuller13
+                            docker tag blueimage efuller13/blueimage
+                            # Step 3:
+                            # Push image to a docker repository
+                            docker push efuller13/blueimage
+                 '''
             }
         }
         stage('Create the kubeconfig file') {
