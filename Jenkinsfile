@@ -17,7 +17,7 @@ pipeline {
                 echo 'Deploying....'
             }
         }
-        stage('create the kubeconfig file') {
+        stage('Create the kubeconfig file') {
             steps {
                 echo 'Deploying....'
             }
