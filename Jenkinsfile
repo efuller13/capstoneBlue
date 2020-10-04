@@ -4,32 +4,36 @@ pipeline {
     stages {
         stage('Linting') {
             steps {
-                echo 'Building..'
+                sh 'tidy -q -e *.html'
             }
         }
         stage('Build blue image') {
             steps {
-                echo 'Testing..'
+                sh 'sudo -S ./run_docker.sh'
             }
         }
         stage('Push blue image') {
             steps {
-                echo 'Deploying....'
+                sh 'sudo -S ./upload_docker.sh'
             }
         }
         stage('Create the kubeconfig file') {
             steps {
-                echo 'Deploying....'
+              withAWS(region: 'us-east-2', credentials: 'aws_credentials'){
+               sh '''
+                              aws eks --region us-east-2 update-kubeconfig --name Capstone
+                 '''
+              }
             }
         }
         stage('Deploy blue container') {
             steps {
-                echo 'Deploying....'
+                sh 'kubectl apply -f ./blue-controller.json'
             }
         }
         stage('Redirect service to blue container') {
             steps {
-                echo 'Deploying....'
+                sh 'kubectl apply -f ./blue-green-service.json'
             }
         }        
     }
