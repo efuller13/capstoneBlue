@@ -19,7 +19,7 @@ pipeline {
         }
         stage('Create the kubeconfig file') {
             steps {
-              withAWS(region: 'us-east-2', credentials: 'aws_credentials'){
+              withAWS(region: 'us-east-2', credentials: 'Jenkins'){
                sh '''
                               aws eks --region us-east-2 update-kubeconfig --name Capstone
                  '''
