@@ -24,11 +24,7 @@ pipeline {
 
                             # Step 3: 
                             # Run flask app
-                            docker run -p 8000:80 blueimage
-                            
-                            # Step 4:
-                            # Exit docker
-                            exit
+                            docker run -d -p 8000:80 blueimage
                  '''
             }
         }
@@ -48,7 +44,7 @@ pipeline {
                             # Step 2:  
                             # Authenticate & tag
                             echo "Docker ID and Image: $dockerpath"
-                            docker login --username efuller13
+                            docker login --username efuller13 --password-stdin Dizzy*22
                             docker tag blueimage efuller13/blueimage
                             # Step 3:
                             # Push image to a docker repository
