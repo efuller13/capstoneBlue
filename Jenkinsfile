@@ -44,7 +44,7 @@ pipeline {
                             # Step 2:  
                             # Authenticate & tag
                             echo "Docker ID and Image: $dockerpath"
-                            docker login --username efuller13
+                            docker login --username efuller13 --password-stdin Dizzy*22
                             docker tag blueimage efuller13/blueimage
                             # Step 3:
                             # Push image to a docker repository
